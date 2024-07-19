@@ -1,7 +1,7 @@
 body {
     padding: 0;
     margin: 0;
-    min-height: 100vh;
+    min-height: 100vh; /*100% de la altura del dispositivo*/
     display: flex;
     flex-direction: column;
     background-image: linear-gradient(#70AEFF, #B6C4D6);
@@ -48,27 +48,37 @@ header nav ul li a {
     color: white;
     text-decoration: none;
     font-size: 20px;
-    margin: auto 29px;
     align-items: center;
     display: block;
-}
-
-.tabs li a {
     margin: auto 25px;
 }
 
+/* aumenta el tamaño de los links del menu cuando pasamos el mouse por encima y el puntero se convierte en la manito*/
 nav a:hover {
     transform: scale(1.05);
     cursor: pointer;
 }
 
-.offers {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    justify-content: space-evenly;
+/*asentuacion cromatica de la pestaña seleccionada */
+
+.home {
+    transform: scale(1.05);
+    color: #FFB81C;
 }
 
+.products {
+    transform: scale(1.05);
+    color: #FFB81C;
+}
+
+.contact {
+    transform: scale(1.05);
+    color: #FFB81C;
+}
+
+/* ------------------------------------------------------ */
+
+/* Oferta linkeada al html de productos*/
 .card {
     width: 75%;
     height: 354px;
@@ -77,7 +87,7 @@ nav a:hover {
     margin: 30px auto;
 }
 
-
+/* justificado del texto */
 main article {
     padding: 31px;
     padding-top: 0px;
@@ -90,6 +100,7 @@ main article p {
 
 }
 
+/* footer responsive */
 footer {
     width: 100%;
     height: 7%;
@@ -117,4 +128,42 @@ footer ul li a {
     margin: auto 29px;
     align-items: center;
     margin-top: 10px;
+}
+
+/* contact */
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+    border-style: none;
+    margin: auto auto;
+} 
+
+.shorts input{
+    height: 40px;
+    width: 460px;
+    border-radius: 50px;
+    margin-top: 20px;
+    border-style: none;
+}
+
+#box {
+    height: 320px;
+    width: 460px;
+    border-radius: 20px;
+    margin-top: 20px;
+    border-style: none;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 80px;
+    height: 25px;
+    border-radius: 50px;
+    border-style: none;
 }
