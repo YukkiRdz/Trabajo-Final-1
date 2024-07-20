@@ -1,6 +1,7 @@
 body {
     padding: 0;
     margin: 0;
+    min-width: 1000px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -80,11 +81,19 @@ nav a:hover {
 
 /* Oferta linkeada al html de productos*/
 .offers {
-    width: 75%;
-    height: 354px;
-    background-color: white;
-    border-radius: 50px;
+    width: 75vw;
+    max-width: 1500px;
+    min-width: 750px;
     margin: 30px auto;
+}
+
+.offers:hover {
+    transform: scale(1.05);
+}
+
+.offers img {
+    width: 100%;
+    border-radius: 40px;
 }
 
 /* justificado de los parrafos */
@@ -106,6 +115,7 @@ main article p {
     display: flex;
     flex-wrap: wrap;
     margin: auto;
+    justify-content: center;
     justify-content: space-between;
     width: 80%;
 }
