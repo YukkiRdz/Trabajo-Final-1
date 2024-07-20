@@ -1,22 +1,79 @@
-//traigo todas las tabs del html
-let tabs = document.querySelectorAll('.tab');
-//traigo los articulos del html
-let articulos = document.querySelectorAll('.contenidos article');
-//traigo los links del html
-let links = document.querySelectorAll('.tab');
+"use strict";
 
-//para cada tab que este dentro de la lista tabs. al hacer click se inicia la funcion para remover la clase active de cada uno y se le agrega a la que sea clickeada
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        tabs.forEach(tab => tab.classList.remove('active'));
-        tab.classList.add('active');
+// Ejecuta evento ni bien cargue HTML
+document.addEventListener('DOMContentLoaded', () => {
+    //envia solicitud para cargar el archivo txt
+    fetch('../TXT/products.txt')
+        // Convierte la respuesta en texto
+        .then(response => response.text())
+        .then(data => {
+            // Divide el texto en lineas y mapea cada linea a un nombre, precio y stock
+            const products = data.split('\n').map(line => {
+                const [name, price, stock] = line.split(',');
+                // Convierte el precio a un número de punto flotante para asegurarse de que se pueda usar en cálculos futuros
+                return { name, price: parseFloat(price), stock: parseInt(stock), initialStock: parseInt(stock) };
+            });
+            // Selecciona todos los elementos con clase productContainers e itera sobre cada contenedor
+            const productContainers = document.querySelectorAll('.product-container');
+            productContainers.forEach((container, index) => {
+                const product = products[index];
+                if (product) {
+                    const productNameElement = container.querySelector('.product-name');
+                    const productPriceElement = container.querySelector('.product-price');
+                    if (productNameElement && productPriceElement) {
+                        productNameElement.textContent = `Nombre: ${product.name}`;
+                        // Agrega el símbolo $ solo cuando se muestra el precio en la página
+                        productPriceElement.textContent = `Precio: $${product.price}`;
+                    }
+                    const quantityInput = container.querySelector('.product-quantity');
+                    const validateBtn = container.querySelector('.validate-btn');
 
-        //este metodo es para obtener el id de todos los articulos
-        //primero obtiene el valor del atributoi href...
-        let ref = links.getAttribute('href').substring(1); //...luego con el metodo substring(1) elimina el primer caracter del valor href
-        //elimina la clase active de cada articulo
-        articulos.forEach(articulos => articulos.classList.remove('active'));
-        //se le da la clase active al articulo que pertenece al tab seleccionado
-        document.getElementById(ref).classList.add('active');
-    });
+                    // Asegúrate de que el valor ingresado sea siempre positivo
+                    quantityInput.addEventListener('input', () => {
+                        if (quantityInput.value < 0) {
+                            quantityInput.value = 0;
+                        }
+                    });
+
+                    validateBtn.addEventListener('click', () => {
+                        const quantity = parseInt(quantityInput.value);
+                        if (quantity > product.stock) {
+                            alert('No contamos con la cantidad solicitada del producto en stock, disculpe las molestias');
+                        } else {
+                            // Descuenta la cantidad del stock actual
+                            product.stock -= quantity;
+                            // Muestra el stock restante después de la validación
+                            alert(`Cantidad disponible. Stock restante: ${product.stock}`);
+                        }
+                    });
+                }
+            });
+        })
+        .catch(error => console.error('Error al cargar el archivo:', error));
+});
+
+//--------------------------------------------------------------------------------------//
+
+//Contact
+
+let nombre = document.getElementById('nombre');
+let apellido = document.getElementById('apellido');
+let correo = document.getElementById('correo');
+let telefono = document.getElementById('telefono');
+let box = document.getElementById('box');
+let btnEnviar = document.getElementById('enviar');
+let informacion = [];
+
+btnEnviar.addEventListener('click', (e) => {
+    e.preventDefault(); //previene la accion del form de actualizar la pagina
+    informacion[0] = nombre.value;
+    informacion[1] = apellido.value;
+    informacion[2] = correo.value;
+    informacion[3] = telefono.value;
+    informacion[4] = box.value;
+
+    let blob = new Blob([informacion], { type: 'text/plain;charset=utf-8' }); //navegador
+
+    //libreria FileSaver.js
+    saveAs(blob, 'contact.txt'); //recibe el blob y lo guarda en el txt
 });
