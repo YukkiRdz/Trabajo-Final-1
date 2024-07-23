@@ -83,34 +83,62 @@ nav a:hover {
 
 /* ------------------------------------------------------ */
 
-/* Oferta linkeada al html de productos*/
-.offers {
-    width: 75vw;
-    max-width: 1500px;
-    min-width: 750px;
-    margin: 30px auto;
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    justify-content: center;
+    justify-content: space-between;
+    width: 80%;
 }
 
-.offers:hover {
+.product-container {
+    display: flex;
+    align-items: center;
+    margin: 30px;
+}
+
+.card2 {
+    width: 355px;
+    height: 354px;
+    background-color: transparent;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card2 img {
+    width: 60%;
+}
+
+.card2 img:hover{
     transform: scale(1.05);
 }
 
-.offers img {
-    width: 100%;
-    border-radius: 40px;
+.product-info {
+    margin-left: 20px;
 }
 
-/* justificado de los parrafos */
-main article {
-    padding: 31px;
-    padding-top: 0px;
-    margin: 0px 100px;
+.product-info p,
+.product-info input,
+.product-info button {
+    margin: 10px 0;
 }
 
-main article p {
-    display: flex;
-    text-align: justify;
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #003087;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
 
+button:hover {
+    transform: scale(1.05);
 }
 
 /* ------------------------------------------------------ */
