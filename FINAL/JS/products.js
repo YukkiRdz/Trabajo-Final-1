@@ -6,6 +6,7 @@ let prices = [169869, 1899999, 609000, 29999, 9.99, 20.00, 5.50, 25.00, 30.00, 8
 let stocks = [5, 3, 8, 2, 10, 4, 6, 1, 7, 9, 5, 3, 2, 4, 6];
 let images = ['../IMAGES/Camara Fujifilm Instax mini 12.png', '../IMAGES/Samsung Galaxy S24 Plus.png', '../IMAGES/Bicicleta rodado 29 Venzo Loki evo shadow.png', '../IMAGES/Pelota de Volleyball.png'];
 let totalAmount = 0;
+
 // Ejecuta evento ni bien cargue HTML
 document.addEventListener('DOMContentLoaded', () => {
      // Selecciona todos los elementos con clase product-container e itera sobre cada contenedor
@@ -19,6 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     productNameElement.textContent = `${names[index]}`;
                     // Agrega el símbolo $ solo cuando se muestra el precio en la página
                     productPriceElement.textContent = `Precio: $${prices[index]}`;
+                    //Descuento el 10% al precio de las camaras
+                    if (index === 0) {
+                    productPriceElement.textContent = `Precio: $${prices[index]* 0.9}`;
+                    }
                     // Agrega el atributo src y la url de las imagenes
                     imgElement.setAttribute('src', images[index]);
                     //el texto alternativo se establece con los nombres de los productos
@@ -41,13 +46,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                          // Descuenta la cantidad del stock actual
                          stocks[index] -= quantity;
-                         // Suma el costo del/los productos validado al total acumulado
-                         totalAmount += prices[index] * quantity;
+                         // Suma el costo de los productos agregados al total acumulado
+                         //si el producto agregado es "Camara Fujifilm Instax mini 12" se suma al total el precio con descuento
+                         if (index === 0) {
+                              totalAmount += (prices[index] * 0.9) * quantity;
+                         } else {
+                              totalAmount += prices[index] * quantity;
+                         }
                          // Actualiza el elemento y convierte el texto en un string para mostrar el total en el header
                          document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
                          // Muestra el stock restante después de la validación en consola
                          console.log(`Cantidad disponible.Stock restante: ${stocks[index]}`);
-                         // alert(`su producto ha sido agregado al carrito`);
                     }
                });
           }
