@@ -22,13 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     productPriceElement.textContent = `Precio: $${prices[index]}`;
                     //Descuento el 10% al precio de las camaras
                     if (index === 0) {
-                    productPriceElement.textContent = `Precio: $${prices[index]* 0.9}`;
+                         productPriceElement.textContent = `Precio: $${prices[index] * 0.9}`;
                     }
                     // Agrega el atributo src y la url de las imagenes
                     imgElement.setAttribute('src', images[index]);
                     //el texto alternativo se establece con los nombres de los productos
                     imgElement.setAttribute('alt', names[index]);
                }
+
                let quantityInput = container.querySelector('.product-quantity');
                let addBtn = container.querySelector('.add-btn');
 
