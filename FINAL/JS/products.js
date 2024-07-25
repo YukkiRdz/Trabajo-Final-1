@@ -1,10 +1,11 @@
 "use strict";
 
 // Definimos los productos en arrays separados
-let names = ["Camara Fujifilm Instax mini 12", "Samsung Galaxy S24+", "Bicicleta rodado 29 Venzo Loki evo shadow", "Pelota de Volleyball", "Producto 5", "Producto 6", "Producto 7", "Producto 8", "Producto 9", "Producto 10", "Producto 11", "Producto 12", "Producto 13", "Producto 14", "Producto 15"];
-let prices = [169869, 1899999, 609000, 29999, 9.99, 20.00, 5.50, 25.00, 30.00, 8.75, 14.99, 19.99, 22.50, 11.25, 16.75];
-let stocks = [5, 3, 8, 2, 10, 4, 6, 1, 7, 9, 5, 3, 2, 4, 6];
-let images = ['../IMAGES/Camara Fujifilm Instax mini 12.png', '../IMAGES/Samsung Galaxy S24 Plus.png', '../IMAGES/Bicicleta rodado 29 Venzo Loki evo shadow.png', '../IMAGES/Pelota de Volleyball.png'];
+let names = ["Camara Fujifilm Instax mini 12", "Samsung Galaxy S24+", "Bicicleta rodado 29 Venzo Loki evo shadow", "Pelota de Volleyball", "Mochila para Laptop LuckyLy", "Almohadones Panama", "Ollas y sartenes antiadherentes Carote", "Whisky Jack Daniel's", "Heladera Koh-i-noor Khda 43/7 Acero", "Antonio Banderas", "Tostadora Peabody inoxidable", "Taladro Atornillador Inalámbrico"];
+let prices = [169869, 1899999, 609000, 29999, 57340, 9280, 97299, 69500, 1049999, 33100, 74999, 135999];
+let stocks = [5, 3, 8, 2, 10, 4, 6, 1, 7, 9, 5, 3
+];
+let images = ['../IMAGES/Camara Fujifilm Instax mini 12.png', '../IMAGES/Samsung Galaxy S24 Plus.png', '../IMAGES/Bicicleta rodado 29 Venzo Loki evo shadow.png', '../IMAGES/Pelota de Volleyball.png', '../IMAGES/Mochila para Laptop hasta 16 Pulgadas LuckyLy.webp', '../IMAGES/Almohadones Panama.png', '../IMAGES/Juego de ollas y sartenes antiadherentes Carote.png', `../IMAGES/Whisky Jack Daniel's Gentleman Jack 750cm3.png`, '../IMAGES/Heladera Koh-i-noor Khda 43 7 Cícliclo Dynamic System 413 L Acero.png', '../IMAGES/Antonio Banderas Black Seduction.png', '../IMAGES/Tostadora Peabody inoxidable.png', '../IMAGES/Taladro Atornillador Inalámbrico Gamma.png'];
 let totalAmount = 0;
 
 // Ejecuta evento ni bien cargue HTML

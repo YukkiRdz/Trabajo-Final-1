@@ -87,7 +87,7 @@ nav a:hover {
     display: flex;
     flex-wrap: wrap;
     margin: auto;
-    justify-content: center;
+    justify-content: flex-start;
     justify-content: space-between;
     width: 80%;
 }
@@ -124,6 +124,10 @@ nav a:hover {
 .product-info input,
 .product-info button {
     margin: 10px 0;
+}
+
+.strikethrough {
+    text-decoration: line-through;
 }
 
 button {
