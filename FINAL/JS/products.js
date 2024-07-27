@@ -15,9 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
      productContainers.forEach((container, index) => {
           if (names[index] && prices[index] && stocks[index] !== undefined) {
                let imgElement = container.querySelector('.product-image');
+               let productStockElement = container.querySelector('.product-stock');
                let productNameElement = container.querySelector('.product-name');
                let productPriceElement = container.querySelector('.product-price');
                if (productNameElement && productPriceElement) {
+                    productStockElement.textContent = `Stock: ${stocks[index]}`;
                     productNameElement.textContent = `${names[index]}`;
                     // Agrega el símbolo $ solo cuando se muestra el precio en la página
                     productPriceElement.textContent = `Precio: $${prices[index]}`;
