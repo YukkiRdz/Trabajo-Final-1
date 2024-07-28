@@ -61,6 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
                          document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
                          // Muestra el stock restante después de la validación en consola
                          console.log(`Cantidad disponible.Stock restante: ${stocks[index]}`);
+                         // Actualiza el stock mostrado en pantalla
+                         productStockElement.textContent = `Stock: ${stocks[index]}`;
                     }
                });
           }
