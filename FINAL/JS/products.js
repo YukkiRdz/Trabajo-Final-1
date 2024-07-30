@@ -9,6 +9,11 @@ let totalAmount = 0;
 
 // Ejecuta evento ni bien cargue HTML
 document.addEventListener('DOMContentLoaded', () => {
+     // Cargar el valor de totalAmount desde sessionStorage
+     let totalAmount = parseFloat(sessionStorage.getItem('totalAmount')) || 0.00;
+     document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
+     console.log(`Total Amount loaded from sessionStorage: ${totalAmount}`);
+
      // Selecciona todos los elementos con clase product-container e itera sobre cada contenedor
      let productContainers = document.querySelectorAll('.product-container');
      productContainers.forEach((container, index) => {
@@ -58,6 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
                          }
                          // Actualiza el elemento y convierte el texto en un string para mostrar el total en el header
                          document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
+                         // almacenar la información de manera local pero solo lo que dure la sesion
+                         sessionStorage.setItem('totalAmount', totalAmount.toFixed(2));
                          // Muestra el stock restante después de la validación en consola
                          console.log(`Cantidad disponible.Stock restante: ${stocks[index]}`);
                          // Actualiza el stock mostrado en pantalla

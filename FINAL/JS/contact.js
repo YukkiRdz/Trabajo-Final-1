@@ -16,8 +16,15 @@ btnEnviar.addEventListener('click', (e) => {
     informacion[3] = telefono.value;
     informacion[4] = box.value;
 
-    let blob = new Blob([informacion], { type: 'text/plain;charset=utf-8' }); //navegador
+    let blob = new Blob([informacion], { type: 'text/plain;charset=utf-8' }); //navegador 
 
     //libreria FileSaver.js
     saveAs(blob, 'contact.txt'); //recibe el blob y lo guarda en el txt
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    //carga el total desde el almacenamiento local de esta sesion y convierte el string en un numero 
+    let totalAmount = parseFloat(sessionStorage.getItem('totalAmount')) || 0.00;
+    document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
+    console.log(`Total Amount loaded from sessionStorage: ${totalAmount}`);
 });
