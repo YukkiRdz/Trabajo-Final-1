@@ -20,6 +20,12 @@ btnEnviar.addEventListener('click', (e) => {
 
     //libreria FileSaver.js
     saveAs(blob, 'contact.txt'); //recibe el blob y lo guarda en el txt
+    //vaciar inputs luego de apretar el boton
+    nombre.value = '';
+    apellido.value = '';
+    correo.value = '';
+    telefono.value = '';
+    box.value = '';
 });
 
 document.addEventListener('DOMContentLoaded', () => {
