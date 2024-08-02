@@ -10,22 +10,28 @@ let informacion = [];
 
 btnEnviar.addEventListener('click', (e) => {
     e.preventDefault(); //previene la accion del form de actualizar la pagina
-    informacion[0] = nombre.value;
-    informacion[1] = apellido.value;
-    informacion[2] = correo.value;
-    informacion[3] = telefono.value;
-    informacion[4] = box.value;
+    //validacion de inputs antes de descargar el txt
+    if (nombre.value != '' && apellido.value != '' && correo.value != '' && telefono.value != '' && box.value != '') {
+        informacion[0] = nombre.value;
+        informacion[1] = apellido.value;
+        informacion[2] = correo.value;
+        informacion[3] = telefono.value;
+        informacion[4] = box.value;
 
-    let blob = new Blob([informacion], { type: 'text/plain;charset=utf-8' }); //navegador 
+        let blob = new Blob([informacion], { type: 'text/plain;charset=utf-8' }); //navegador 
 
-    //libreria FileSaver.js
-    saveAs(blob, 'contact.txt'); //recibe el blob y lo guarda en el txt
-    //vaciar inputs luego de apretar el boton
-    nombre.value = '';
-    apellido.value = '';
-    correo.value = '';
-    telefono.value = '';
-    box.value = '';
+        //libreria FileSaver.js
+        saveAs(blob, 'contact.txt'); //recibe el blob y lo guarda en el txt
+        //vaciar inputs luego de apretar el boton
+        nombre.value = '';
+        apellido.value = '';
+        correo.value = '';
+        telefono.value = '';
+        box.value = '';
+    } else {
+        alert('Por favor, debe completar todos los campos antes de enviar');
+
+    }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
