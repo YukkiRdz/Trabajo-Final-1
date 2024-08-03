@@ -18,6 +18,7 @@ btnEnviar.addEventListener('submit', (e) => {
         informacion[3] = ' Telefono:' + telefono.value;
         informacion[4] = ' Comentario:' + box.value;
         let blob = new Blob([informacion], { type: 'text/plain;charset=utf-8' }); //navegador 
+        //min 10 digitos en el input telefono
         if ((telefono.value).length >= 10) {
             //libreria FileSaver.js
             saveAs(blob, 'contact.txt'); //recibe el blob y lo guarda en el txt
