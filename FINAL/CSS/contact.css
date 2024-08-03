@@ -140,7 +140,7 @@ form {
 
 input[type='text'],
 input[type='email'],
-input[type='tel'],
+input[type='number'],
 textarea {
     text-align: center;
     display: block;
@@ -152,16 +152,21 @@ textarea {
 
 input[type='text'],
 input[type='email'],
-input[type='tel'] {
+input[type='number'] {
     height: 30px;
 }
+
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
 
 textarea {
     height: 280px;
     padding: 10px 0px;
 }
 
-button {
+button, .btn {
     display: block;
     margin: 10px auto;
     padding: 10px 20px;
