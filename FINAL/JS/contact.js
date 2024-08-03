@@ -6,17 +6,18 @@ let correo = document.getElementById('correo');
 let telefono = document.getElementById('telefono');
 let box = document.getElementById('box');
 let btnEnviar = document.getElementById('enviar');
+let form = document.getElementById('form');
 let informacion = [];
 
 btnEnviar.addEventListener('click', (e) => {
     e.preventDefault(); //previene la accion del form de actualizar la pagina
     //validacion de inputs antes de descargar el txt
     if (nombre.value != '' && apellido.value != '' && correo.value != '' && telefono.value != '' && box.value != '') {
-        informacion[0] = nombre.value;
-        informacion[1] = apellido.value;
-        informacion[2] = correo.value;
-        informacion[3] = telefono.value;
-        informacion[4] = box.value;
+        informacion[0] = 'Nombre:' + nombre.value;
+        informacion[1] = 'Apellido:' + apellido.value;
+        informacion[2] = 'Correo:' + correo.value;
+        informacion[3] = 'Telefono:' + telefono.value;
+        informacion[4] = 'Comentario:' + box.value;
 
         let blob = new Blob([informacion], { type: 'text/plain;charset=utf-8' }); //navegador 
 
@@ -30,7 +31,6 @@ btnEnviar.addEventListener('click', (e) => {
         box.value = '';
     } else {
         alert('Por favor, debe completar todos los campos antes de enviar');
-
     }
 });
 
