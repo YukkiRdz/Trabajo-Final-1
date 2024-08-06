@@ -8,69 +8,162 @@ let images = ['../IMAGES/Camara Fujifilm Instax mini 12.png', '../IMAGES/Samsung
 
 // Ejecuta evento ni bien cargue HTML
 document.addEventListener('DOMContentLoaded', () => {
-     // Cargar el valor de totalAmount desde sessionStorage
-     let totalAmount = parseFloat(sessionStorage.getItem('totalAmount')) || 0.00;
-     document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
-     console.log(`Total Amount loaded from sessionStorage: ${totalAmount}`);
+    // Cargar el valor de totalAmount desde sessionStorage
+    let totalAmount = parseFloat(sessionStorage.getItem('totalAmount')) || 0.00;
 
-     // Selecciona todos los elementos con clase product-container e itera sobre cada contenedor
-     let productContainers = document.querySelectorAll('.product-container');
-     productContainers.forEach((container, index) => {
-          if (names[index] && prices[index] && stocks[index] !== undefined) {
-               let imgElement = container.querySelector('.product-image');
-               let productStockElement = container.querySelector('.product-stock');
-               let productNameElement = container.querySelector('.product-name');
-               let productPriceElement = container.querySelector('.product-price');
-               //modifica los elementos de cada contenedor
-               if (productNameElement && productPriceElement) {
-                    productStockElement.textContent = `Stock: ${stocks[index]}`;
-                    productNameElement.textContent = `${names[index]}`;
-                    // Agrega el símbolo $ solo cuando se muestra el precio en la página
-                    productPriceElement.textContent = `Precio: $${prices[index]}`;
-                    //Descuento el 10% al precio de las camaras
-                    if (index === 0) {
-                         productPriceElement.textContent = `Precio: $${prices[index] * 0.9}`;
-                    }
-                    // Agrega el atributo src y la url de las imagenes
-                    imgElement.setAttribute('src', images[index]);
-                    //el texto alternativo se establece con los nombres de los productos
-                    imgElement.setAttribute('alt', names[index]);
-               }
+    // Selecciona todos los elementos con clase product-container e itera sobre cada contenedor
+    let mainProducts = document.querySelector('.main');
 
-               let quantityInput = container.querySelector('.product-quantity');
-               let addBtn = container.querySelector('.add-btn');
+    for (let index = 0; index < names.length; index++) {
+        //creamos div contenedor por cada iteracion
+        let divContainer = document.createElement('div');
+        //agregamos la clase
+        divContainer.classList.add('product-container');
+        //establecemos el div como hijo del main
+        mainProducts.appendChild(divContainer);
 
-               // Asegúrate de que el valor ingresado sea cero o positivo y entero
-               quantityInput.addEventListener('input', () => {
-                    if (quantityInput.value < 0 || quantityInput.value == '') {
-                         quantityInput.value = 0;
-                    }
-               });
+        //creamos div para las imagenes
+        let divImg = document.createElement('div');
+        //agregamos la clase
+        divImg.classList.add('card2');
+        //establecemos el div como hijo de divContainer
+        divContainer.appendChild(divImg);
 
-               addBtn.addEventListener('click', () => {
-                    let quantity = parseInt(quantityInput.value);
-                    if (quantity > stocks[index]) {
-                         alert('No contamos con la cantidad solicitada del producto en stock, disculpe las molestias');
-                    } else {
-                         // Descuenta la cantidad del stock actual
-                         stocks[index] -= quantity;
-                         // Suma el costo de los productos agregados al total acumulado
-                         //si el producto agregado es "Camara Fujifilm Instax mini 12" se suma al total el precio con descuento
-                         if (index === 0) {
-                              totalAmount += (prices[index] * 0.9) * quantity;
-                         } else {
-                              totalAmount += prices[index] * quantity;
-                         }
-                         // Actualiza el elemento y convierte el texto en un string para mostrar el total en el header
-                         document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
-                         // almacenar la información de manera local pero solo lo que dure la sesion
-                         sessionStorage.setItem('totalAmount', totalAmount.toFixed(2));
-                         // Muestra el stock restante después de la validación en consola
-                         console.log(`Cantidad disponible.Stock restante: ${stocks[index]}`);
-                         // Actualiza el stock mostrado en pantalla
-                         productStockElement.textContent = `Stock: ${stocks[index]}`;
-                    }
-               });
-          }
-     });
+        //creamos y agregamos la imagen del producto
+        let imgElement = document.createElement('img');
+        //agregamos la clase de la imagen
+        imgElement.classList.add('product-image');
+        // Agrega el atributo src y la url de las imagenes
+        imgElement.setAttribute('src', images[index]);
+        //el texto alternativo se establece con los nombres de los productos
+        imgElement.setAttribute('alt', names[index]);
+        //establecemos las imagenes como hijas de divImg
+        divImg.appendChild(imgElement);
+
+        //creamos un div para la info de los productos
+        let divInfo = document.createElement('div');
+        //agregamos la clase del div
+        divInfo.classList.add('product-info');
+        //establecemos el div como hijo de divContainer
+        divContainer.appendChild(divInfo);
+
+        //creamos un parrafo para el nombre
+        let productNameElement = document.createElement('p')
+        //agregamos la clase
+        productNameElement.classList.add('product-name');
+        //establecemos el p como hijo de divInfo
+        divInfo.appendChild(productNameElement);
+        //modificamos el contenido
+        productNameElement.textContent = `${names[index]}`;
+
+
+        //creamos un parrafo para el stock
+        let productStockElement = document.createElement('p')
+        //agregamos la clase
+        productStockElement.classList.add('product-stock');
+        //establecemos el p como hijo de divInfo
+        divInfo.appendChild(productStockElement);
+        //modificamos su contenido
+        productStockElement.textContent = `Stock: ${stocks[index]}`;
+
+        //creamos un parrafo para el precio
+        let productPriceElement = document.createElement('p')
+        //agregamos la clase
+        productPriceElement.classList.add('product-stock');
+        //establecemos el p como hijo de divInfo
+        divInfo.appendChild(productPriceElement);
+        //modificamos el contenido
+        productPriceElement.textContent = `Precio: $${prices[index]}`;
+
+        //si el producto es la camara con descuento
+        if (index === 0) {
+            //creamos un p adicional
+            let cameraPrice = document.createElement('p');
+            //agregamos una clase
+            cameraPrice.classList.add('strikethrough');
+            //modificamos su contenido
+            cameraPrice.textContent = '$169869';
+            //establecemos cemeraPrice como hijo de divInfo
+            divInfo.appendChild(cameraPrice);
+            //el precio se muestra con descuento
+            productPriceElement.textContent = `Precio: $${prices[index] * 0.9}`;
+        }
+
+        //creamos el input
+        let input = document.createElement('input');
+        //agregamos la clase del input
+        input.classList.add('product-quantity');
+        //agregamos los atributos del input
+        input.setAttribute('type', 'number');
+        input.setAttribute('placeholder', 'stock');
+        input.setAttribute('min', '0');
+        input.setAttribute('max', stocks[index]);
+        input.setAttribute('value', '0');
+        //establecemos el input como hijo de divInfo
+        divInfo.appendChild(input);
+
+        //creamos el boton
+        let btn = document.createElement('button');
+        //agregamos su clase
+        btn.classList.add('add-btn');
+        //establecemos el boton como hijo de divInfo
+        divInfo.appendChild(btn);
+        //modificamos su contenido
+        btn.textContent = 'Agregar';
+
+        //creamos un div que contenga el boton de finalizar compra
+        let divBuy = document.createElement('div');
+        //agregamos su clase
+        divBuy.classList.add('btn-finalized-buy');
+        //establecemos el div como hijo de main
+        mainProducts.appendChild(divBuy);
+
+        // Asegura de que el valor ingresado sea cero o positivo
+        input.addEventListener('input', () => {
+            if (input.value < 0 || input.value == '') {
+                input.value = 0;
+            }
+        });
+
+        btn.addEventListener('click', () => {
+            let quantity = parseInt(input.value);
+            if (quantity > stocks[index]) {
+                alert('No contamos con la cantidad solicitada del producto en stock, disculpe las molestias');
+            } else {
+                // Descuenta la cantidad del stock actual
+                stocks[index] -= quantity;
+                // Suma el costo de los productos agregados al total acumulado
+                //si el producto agregado es "Camara Fujifilm Instax mini 12" se suma al total el precio con descuento
+                if (index === 0) {
+                    totalAmount += (prices[index] * 0.9) * quantity;
+                } else {
+                    totalAmount += prices[index] * quantity;
+                }
+                // Actualiza el elemento y convierte el texto en un string para mostrar el total en el header
+                document.getElementsById('total-amount').textContent = totalAmount.toFixed(2);
+                // Muestra el stock restante después de la validación en consola
+                console.log(`Cantidad disponible.Stock restante: ${stocks[index]}`);
+                // Actualiza el stock mostrado en pantalla
+                productStockElement.textContent = `Stock: ${stocks[index]}`;
+            }
+        });
+    }
+
+    //creamos el boton de finalizar compra
+    let finalizedBuyBtn = document.createElement('button');
+    //agregamos sus clases
+    finalizedBuyBtn.classList.add('finalized-buy');
+    //establecemos el boton como hijo del main
+    mainProducts.appendChild(finalizedBuyBtn);
+    //modificamos su contenido
+    finalizedBuyBtn.textContent = 'Finalizar compra';
+
+    finalizedBuyBtn.addEventListener('click', () => {
+        document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
+        console.log(`Total Amount loaded from sessionStorage: ${totalAmount}`);
+        // almacenar la información de manera local pero solo lo que dure la sesion
+        sessionStorage.setItem('totalAmount', totalAmount.toFixed(2));
+
+    })
+    document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
 });
