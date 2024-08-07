@@ -3,13 +3,15 @@
 // Definimos los productos en arrays separados
 let names = ["Camara Fujifilm Instax mini 12", "Samsung Galaxy S24+", "Bicicleta rodado 29 Venzo Loki evo shadow", "Pelota de Volleyball", "Mochila para Laptop LuckyLy", "Almohadones Panama", "Ollas y sartenes antiadherentes Carote", "Whisky Jack Daniel's", "Heladera Koh-i-noor Khda 43/7 Acero", "Antonio Banderas", "Tostadora Peabody inoxidable", "Taladro Atornillador Inalámbrico"];
 let prices = [169869, 1899999, 609000, 29999, 57340, 9280, 97299, 69500, 1049999, 33100, 74999, 135999];
-let stocks = [5, 3, 8, 2, 10, 4, 6, 1, 7, 9, 5, 3];
+let initialStocks = [5, 3, 8, 2, 10, 4, 6, 1, 7, 9, 5, 3];
 let images = ['../IMAGES/Camara Fujifilm Instax mini 12.png', '../IMAGES/Samsung Galaxy S24 Plus.png', '../IMAGES/Bicicleta rodado 29 Venzo Loki evo shadow.png', '../IMAGES/Pelota de Volleyball.png', '../IMAGES/Mochila para Laptop hasta 16 Pulgadas LuckyLy.webp', '../IMAGES/Almohadones Panama.png', '../IMAGES/Juego de ollas y sartenes antiadherentes Carote.png', `../IMAGES/Whisky Jack Daniel's Gentleman Jack 750cm3.png`, '../IMAGES/Heladera Koh-i-noor Khda 43 7 Cícliclo Dynamic System 413 L Acero.png', '../IMAGES/Antonio Banderas Black Seduction.png', '../IMAGES/Tostadora Peabody inoxidable.png', '../IMAGES/Taladro Atornillador Inalámbrico Gamma.png'];
 
 // Ejecuta evento ni bien cargue HTML
 document.addEventListener('DOMContentLoaded', () => {
     // Cargar el valor de totalAmount desde sessionStorage
     let totalAmount = parseFloat(sessionStorage.getItem('totalAmount')) || 0.00;
+    // Cargar el stock de los productos desde sessionStorage o usar el stock inicial
+    let stocks = initialStocks.map((_, index) => parseInt(sessionStorage.getItem(`stock_${index}`)) || initialStocks[index]); //el metodo map crea un nuevo array| _ se usa cuando no se necesita ese argumento en la funcion
 
     // Selecciona todos los elementos con clase product-container e itera sobre cada contenedor
     let mainProducts = document.querySelector('.main');
@@ -111,13 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
         //modificamos su contenido
         btn.textContent = 'Agregar';
 
-        //creamos un div que contenga el boton de finalizar compra
-        let divBuy = document.createElement('div');
-        //agregamos su clase
-        divBuy.classList.add('btn-finalized-buy');
-        //establecemos el div como hijo de main
-        mainProducts.appendChild(divBuy);
-
         // Asegura de que el valor ingresado sea cero o positivo
         input.addEventListener('input', () => {
             if (input.value < 0 || input.value == '') {
@@ -139,31 +134,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     totalAmount += prices[index] * quantity;
                 }
-                // Actualiza el elemento y convierte el texto en un string para mostrar el total en el header
-                document.getElementsById('total-amount').textContent = totalAmount.toFixed(2);
-                // Muestra el stock restante después de la validación en consola
-                console.log(`Cantidad disponible.Stock restante: ${stocks[index]}`);
-                // Actualiza el stock mostrado en pantalla
-                productStockElement.textContent = `Stock: ${stocks[index]}`;
+                 // Actualiza el elemento y convierte el texto en un string para mostrar el total en el header
+                 document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
+                 // Muestra el stock restante después de la validación en consola
+                 console.log(`Cantidad disponible. Stock restante: ${stocks[index]}`);
+                 // Actualiza el stock mostrado en pantalla
+                 productStockElement.textContent = `Stock: ${stocks[index]}`;
+                 // Guardar el stock actualizado en sessionStorage
+                 sessionStorage.setItem(`stock_${index}`, stocks[index]);
+                 // Guardar el total actualizado en sessionStorage
+                //  sessionStorage.setItem('totalAmount', totalAmount.toFixed(2));
             }
         });
     }
 
+    //creamos un div que contenga el boton de finalizar compra
+    let divBuy = document.createElement('div');
+    //agregamos su clase
+    divBuy.classList.add('btn-finalized-buy');
+    //establecemos el div como hijo de main
+    mainProducts.appendChild(divBuy);
+    
     //creamos el boton de finalizar compra
     let finalizedBuyBtn = document.createElement('button');
     //agregamos sus clases
     finalizedBuyBtn.classList.add('finalized-buy');
     //establecemos el boton como hijo del main
-    mainProducts.appendChild(finalizedBuyBtn);
+    divBuy.appendChild(finalizedBuyBtn);
     //modificamos su contenido
     finalizedBuyBtn.textContent = 'Finalizar compra';
 
     finalizedBuyBtn.addEventListener('click', () => {
+        // Mostrar el total amount solo al finalizar compra
+        document.getElementById('total-amount').classList.toggle('hidden');
+        document.getElementById('initial-amount').classList.toggle('hidden');
         document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
         console.log(`Total Amount loaded from sessionStorage: ${totalAmount}`);
         // almacenar la información de manera local pero solo lo que dure la sesion
         sessionStorage.setItem('totalAmount', totalAmount.toFixed(2));
-
-    })
+    });
+    sessionStorage.setItem('totalAmount', totalAmount.toFixed(2));
     document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
 });

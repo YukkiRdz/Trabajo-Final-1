@@ -82,6 +82,11 @@ nav a:hover {
     color: #FFB81C !important;
 }
 
+/*ocultamos el total*/
+.hidden {
+    display: none;
+}
+
 /* ------------------------------------------------------ */
 
 /* contact */

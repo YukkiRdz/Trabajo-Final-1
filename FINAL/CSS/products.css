@@ -81,6 +81,10 @@ nav a:hover {
     color: #FFB81C !important;
 }
 
+.hidden {
+    display: none;
+}
+
 /* ------------------------------------------------------ */
 
 .main{
@@ -143,6 +147,18 @@ button {
 
 button:hover {
     transform: scale(1.05);
+}
+
+div.btn-finalized-buy {
+    width: 100vw;
+
+}
+
+.btn-finalized-buy {
+    display: block;
+    justify-content: center;
+    margin: 30px auto;
+    margin-top: 0px;
 }
 
 /* ------------------------------------------------------ */

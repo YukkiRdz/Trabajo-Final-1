@@ -64,6 +64,11 @@ nav a:hover {
     cursor: pointer;
 }
 
+/*ocultamos el total*/
+.hidden {
+    display: none;
+}
+
 /* ------------------------------------------------------ */
 
 main {
