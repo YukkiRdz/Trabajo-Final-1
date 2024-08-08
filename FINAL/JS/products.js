@@ -11,9 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cargar el valor de totalAmount desde sessionStorage
     let totalAmount = parseFloat(sessionStorage.getItem('totalAmount')) || 0.00;
     // Cargar el stock de los productos desde sessionStorage o usar el stock inicial
-    let stocks = initialStocks.map((_, index) => parseInt(sessionStorage.getItem(`stock_${index}`)) || initialStocks[index]); //el metodo map crea un nuevo array| _ se usa cuando no se necesita ese argumento en la funcion
+    let stocks = initialStocks.map((_, index) => parseInt(sessionStorage.getItem(`stock_${index}`)) || initialStocks[index]);
 
-    // Selecciona todos los elementos con clase product-container e itera sobre cada contenedor
+    // Cargar el estado de finalización de compra desde sessionStorage
+    let isPurchaseFinalized = sessionStorage.getItem('isPurchaseFinalized') === 'true';
+
+    // Selecciona el elemento main
     let mainProducts = document.querySelector('.main');
 
     for (let index = 0; index < names.length; index++) {
@@ -134,16 +137,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     totalAmount += prices[index] * quantity;
                 }
-                 // Actualiza el elemento y convierte el texto en un string para mostrar el total en el header
-                 document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
-                 // Muestra el stock restante después de la validación en consola
-                 console.log(`Cantidad disponible. Stock restante: ${stocks[index]}`);
-                 // Actualiza el stock mostrado en pantalla
-                 productStockElement.textContent = `Stock: ${stocks[index]}`;
-                 // Guardar el stock actualizado en sessionStorage
-                 sessionStorage.setItem(`stock_${index}`, stocks[index]);
-                 // Guardar el total actualizado en sessionStorage
-                //  sessionStorage.setItem('totalAmount', totalAmount.toFixed(2));
+                // Actualiza el elemento y convierte el texto en un string para mostrar el total en el header
+                document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
+                // Muestra el stock restante después de la validación en consola
+                console.log(`Cantidad disponible. Stock restante: ${stocks[index]}`);
+                // Actualiza el stock mostrado en pantalla
+                productStockElement.textContent = `Stock: ${stocks[index]}`;
+                // Guardar el stock actualizado en sessionStorage
+                sessionStorage.setItem(`stock_${index}`, stocks[index]);
+                // Guardar el total actualizado en sessionStorage
+                sessionStorage.setItem('totalAmount', totalAmount.toFixed(2));
             }
         });
     }
@@ -154,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     divBuy.classList.add('btn-finalized-buy');
     //establecemos el div como hijo de main
     mainProducts.appendChild(divBuy);
-    
+
     //creamos el boton de finalizar compra
     let finalizedBuyBtn = document.createElement('button');
     //agregamos sus clases
@@ -166,13 +169,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     finalizedBuyBtn.addEventListener('click', () => {
         // Mostrar el total amount solo al finalizar compra
-        document.getElementById('total-amount').classList.toggle('hidden');
-        document.getElementById('initial-amount').classList.toggle('hidden');
+        document.getElementById('total-amount').classList.remove('hidden');
+        document.getElementById('initial-amount').classList.add('hidden');
         document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
         console.log(`Total Amount loaded from sessionStorage: ${totalAmount}`);
         // almacenar la información de manera local pero solo lo que dure la sesion
         sessionStorage.setItem('totalAmount', totalAmount.toFixed(2));
+        sessionStorage.setItem('isPurchaseFinalized', true); // Guardar estado de finalización
     });
-    sessionStorage.setItem('totalAmount', totalAmount.toFixed(2));
-    document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
+
+    // Comprobar si la compra ya fue finalizada y ajustar la visibilidad del total amount
+    if (isPurchaseFinalized) {
+        document.getElementById('total-amount').classList.remove('hidden');
+        document.getElementById('initial-amount').classList.add('hidden');
+        document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
+    } else {
+        document.getElementById('total-amount').classList.add('hidden');
+    }
 });
